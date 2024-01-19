@@ -22,19 +22,18 @@ http://www.cisst.org/cisst/license.txt.
 #include <sawConstraintOptimizer/osaEquation.h>
 #include <sawConstraintOptimizer/sawConstraintOptimizerExport.h>
 
-class osaConstraintInequality : public osaEquation {
-
-private:
-
-protected:
+class osaConstraintInequality: public osaEquation
+{
 
 public:
 
-    osaConstraintInequality( const std::string& name,
-                             osaEquation::Status status = osaEquation::ACTIVE ) :
-        osaEquation( name, status ){}
-    virtual ~osaConstraintInequality(){};
+    osaConstraintInequality(const std::string& name,
+                            osaEquation::Status status = osaEquation::ACTIVE):
+        osaEquation(name, status)
+    {}
 
+    virtual ~osaConstraintInequality()
+    {}
 };
 
 #endif

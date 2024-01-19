@@ -26,63 +26,63 @@ http://www.cisst.org/cisst/license.txt.
 #include <sawConstraintOptimizer/osaObjective.h>
 #include <sawConstraintOptimizer/osaConstraintEquality.h>
 #include <sawConstraintOptimizer/osaConstraintInequality.h>
+
 #include <sawConstraintOptimizer/sawConstraintOptimizerExport.h>
 
-class osaConstrainedOptimization{
-
-    enum Errno{ ESUCCESS, EFAILURE, ENEWSYSTEM };
+class CISST_EXPORT osaConstrainedOptimization
+{
+    enum Errno {ESUCCESS, EFAILURE, ENEWSYSTEM};
 
 private:
 
     vctDynamicMatrix<double> A, b;
-    std::map< std::string, osaEquation* > objectives;
+    std::map<std::string, osaEquation*> objectives;
 
     vctDynamicMatrix<double> E, f;
-    std::map< std::string, osaEquation* > equalities;
+    std::map<std::string, osaEquation*> equalities;
 
     vctDynamicMatrix<double> G, h;
-    std::map< std::string, osaEquation* > inequalities;
+    std::map<std::string, osaEquation*> inequalities;
 
     nmrLSEISolver lsei;
 
 protected:
 
+    size_t CountActiveObjectives(void) const;
+    size_t CountActiveEqualities(void) const;
+    size_t CountActiveInequalities(void) const;
 
-    size_t CountActiveObjectives() const;
-    size_t CountActiveEqualities() const;
-    size_t CountActiveInequalities() const;
+    Errno ObjectivesDimension(size_t& dimension) const;
+    Errno EqualitiesDimension(size_t& dimension) const;
+    Errno InequalitiesDimension(size_t& dimension) const;
 
-    Errno ObjectivesDimension( size_t& dimension ) const;
-    Errno EqualitiesDimension( size_t& dimension ) const;
-    Errno InequalitiesDimension( size_t& dimension ) const;
+    Errno UpdateObjectivesSystem(void);
+    Errno UpdateEqualitiesSystem(void);
+    Errno UpdateInequalitiesSystem(void);
 
-    Errno UpdateObjectivesSystem();
-    Errno UpdateEqualitiesSystem();
-    Errno UpdateInequalitiesSystem();
-
-    Errno UpdateObjectives();
-    Errno UpdateEqualities();
-    Errno UpdateInequalities();
+    Errno UpdateObjectives(void);
+    Errno UpdateEqualities(void);
+    Errno UpdateInequalities(void);
 
 public:
 
-    osaConstrainedOptimization();
+    osaConstrainedOptimization(void);
 
-    Errno Evaluate( vctDynamicVector<double>& x );
+    Errno Evaluate(vctDynamicVector<double>& x);
 
-    Errno Insert( osaEquation* equation );
-    Errno Insert( osaObjective* objective );
-    Errno Insert( osaConstraintEquality* equality );
-    Errno Insert( osaConstraintInequality* inequality );
+    Errno Insert(osaEquation* equation);
+    Errno Insert(osaObjective* objective);
+    Errno Insert(osaConstraintEquality* equality);
+    Errno Insert(osaConstraintInequality* inequality);
 
-    Errno Remove( const std::string& name );
-    Errno Remove( osaEquation* equation );
-    Errno Remove( osaObjective* objective );
-    Errno Remove( osaConstraintEquality* equality );
-    Errno Remove( osaConstraintInequality* inequality );
+    Errno Remove(const std::string& name);
+    Errno Remove(osaEquation* equation);
+    Errno Remove(osaObjective* objective);
+    Errno Remove(osaConstraintEquality* equality);
+    Errno Remove(osaConstraintInequality* inequality);
 
-    Errno Activate( const std::string& );
-    Errno DeActivate( const std::string& );
+    Errno Activate(const std::string&);
+    Errno DeActivate(const std::string&);
 
 };
 

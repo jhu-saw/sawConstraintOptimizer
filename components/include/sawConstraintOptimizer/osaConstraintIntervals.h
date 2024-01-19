@@ -22,22 +22,17 @@ http://www.cisst.org/cisst/license.txt.
 #include <sawConstraintOptimizer/osaConstraintInequality.h>
 #include <sawConstraintOptimizer/sawConstraintOptimizerExport.h>
 
-class osaConstraintIntervals : public osaConstraintInequality {
+class CISST_EXPORT osaConstraintIntervals: public osaConstraintInequality
+{
+ public:
 
-private:
+    osaConstraintIntervals(const std::string& name,
+                           const vctDynamicVector<double>& min,
+                           const vctDynamicVector<double>& max,
+                           osaEquation::Status status = osaEquation::ACTIVE);
 
-protected:
-
-public:
-
-    osaConstraintIntervals( const std::string& name,
-                            const vctDynamicVector<double>& min,
-                            const vctDynamicVector<double>& max,
-                            osaEquation::Status status = osaEquation::ACTIVE );
-
-    Errno SetIntervals( const vctDynamicVector<double>& min,
-                        const vctDynamicVector<double>& max );
-
+    Errno SetIntervals(const vctDynamicVector<double>& min,
+                       const vctDynamicVector<double>& max);
 };
 
 #endif

@@ -52,7 +52,6 @@ if (cisst_FOUND_AS_REQUIRED)
     ${sawConstraintOptimizer_HEADER_DIR}/osaEquation.h
     ${sawConstraintOptimizer_HEADER_DIR}/osaObjective.h
     ${sawConstraintOptimizer_HEADER_DIR}/osaObjectiveFreeMotion.h
-    ${sawConstraintOptimizer_HEADER_DIR}/mtsObjectiveFreeMotion.h
     code/osaConstrainedOptimization.cpp
     code/osaConstraintIntervals.cpp)
 

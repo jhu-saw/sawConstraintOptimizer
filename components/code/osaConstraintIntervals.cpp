@@ -18,34 +18,34 @@ http://www.cisst.org/cisst/license.txt.
 
 #include <sawConstraintOptimizer/osaConstraintIntervals.h>
 
-osaConstraintIntervals::osaConstraintIntervals
-( const std::string& name,
-  const vctDynamicVector<double>& min,
-  const vctDynamicVector<double>& max,
-  osaEquation::Status status ) :
-    osaConstraintInequality( name, status ){
-    SetIntervals( min, max );
+osaConstraintIntervals::osaConstraintIntervals(const std::string& name,
+                                               const vctDynamicVector<double>& min,
+                                               const vctDynamicVector<double>& max,
+                                               osaEquation::Status status):
+    osaConstraintInequality(name, status)
+{
+    SetIntervals(min, max);
 }
 
 
 osaConstraintIntervals::Errno
-osaConstraintIntervals::SetIntervals
-( const vctDynamicVector<double>& min,
-  const vctDynamicVector<double>& max ){
+osaConstraintIntervals::SetIntervals(const vctDynamicVector<double>& min,
+                                     const vctDynamicVector<double>& max)
+{
+    if (min.size() != max.size()) {
+        return osaConstraintIntervals::EFAILURE;
+    }
 
-    if( min.size() != max.size() ) { return osaConstraintIntervals::EFAILURE; }
+    vctDynamicMatrix<double> A(2 * min.size(), min.size(), 0.0);
+    vctDynamicVector<double> b(2 * min.size(), 0.0);
 
-    vctDynamicMatrix<double> A( 2 * min.size(), min.size(), 0.0 );
-    vctDynamicVector<double> b( 2 * min.size(), 0.0 );
-
-    for( size_t i=0; i<min.size(); i++ ){
+    for (size_t i = 0; i < min.size(); i++) {
         A[i*2+0][i] =  1.0;    b[i*2+0] = min[i];
         A[i*2+1][i] = -1.0;    b[i*2+1] = -max[i];
     }
 
-    SetCoefficientMatrix( A );
-    SetRHSV( b );
+    SetCoefficientMatrix(A);
+    SetRHSV(b);
 
     return osaConstraintIntervals::ESUCCESS;
-
 }

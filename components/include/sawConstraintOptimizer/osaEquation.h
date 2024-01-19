@@ -23,13 +23,13 @@ http://www.cisst.org/cisst/license.txt.
 #include <cisstVector/vctDynamicVector.h>
 #include <sawConstraintOptimizer/sawConstraintOptimizerExport.h>
 
-class osaEquation{
+class CISST_EXPORT osaEquation {
 
-public:
+ public:
 
-    enum Errno{ ESUCCESS, EFAILURE };
+    enum Errno {ESUCCESS, EFAILURE};
 
-    enum Status{ ACTIVE, INACTIVE };
+    enum Status {ACTIVE, INACTIVE};
 
 private:
 
@@ -40,30 +40,55 @@ private:
 
 public:
 
-    osaEquation( const std::string& name, Status status = ACTIVE ) :
-        name( name ), status( status ){}
-    virtual ~osaEquation(){}
+    osaEquation(const std::string& name, Status status = ACTIVE):
+        name(name), status(status)
+    {}
+    virtual ~osaEquation()
+    {}
 
-    std::string GetName() const { return name; }
+    const std::string & GetName(void) const {
+        return name;
+    }
 
-    bool IsActive() const { return status == ACTIVE; }
-    void Activate() { status = ACTIVE; }
-    void DeActivate() { status = INACTIVE; }
+    bool IsActive(void) const {
+        return status == ACTIVE;
+    }
 
-    size_t GetNumEquations() const { return coefficients.rows(); }
-    size_t GetDimension() const { return coefficients.cols(); }
+    void Activate(void) {
+        status = ACTIVE;
+    }
 
-    virtual vctDynamicMatrix<double> GetCoefficientMatrix() const
-    { return coefficients; }
-    virtual void SetCoefficientMatrix( const vctDynamicMatrix<double>& C )
-    { coefficients = C; }
+    void DeActivate(void) {
+        status = INACTIVE;
+    }
 
-    virtual vctDynamicVector<double> GetRHSV() const { return rhsv; }
-    virtual void SetRHSV( const vctDynamicVector<double>& v )
-    { rhsv = v; }
+    size_t GetNumEquations(void ) const {
+        return coefficients.rows();
+    }
 
-    vctDynamicVector<double> Residuals( const vctDynamicVector<double>& x ) const
-    { return coefficients * x - rhsv; }
+    size_t GetDimension(void) const {
+        return coefficients.cols();
+    }
+
+    virtual vctDynamicMatrix<double> GetCoefficientMatrix(void) const {
+        return coefficients;
+    }
+
+    virtual void SetCoefficientMatrix(const vctDynamicMatrix<double>& C) {
+        coefficients = C;
+    }
+
+    virtual vctDynamicVector<double> GetRHSV(void) const {
+        return rhsv;
+    }
+
+    virtual void SetRHSV(const vctDynamicVector<double>& v) {
+        rhsv = v;
+    }
+
+    vctDynamicVector<double> Residuals(const vctDynamicVector<double>& x) const {
+        return coefficients * x - rhsv;
+    }
 
 };
 

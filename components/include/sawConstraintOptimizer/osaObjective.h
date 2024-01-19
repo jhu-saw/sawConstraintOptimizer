@@ -22,19 +22,17 @@ http://www.cisst.org/cisst/license.txt.
 #include <sawConstraintOptimizer/osaEquation.h>
 #include <sawConstraintOptimizer/sawConstraintOptimizerExport.h>
 
-class osaObjective : public osaEquation {
+class CISST_EXPORT osaObjective: public osaEquation
+{
+ public:
 
-private:
+    osaObjective(const std::string& name,
+                 osaEquation::Status status = osaEquation::ACTIVE):
+        osaEquation(name, status)
+    {}
 
-protected:
-
-public:
-
-    osaObjective( const std::string& name,
-                  osaEquation::Status status = osaEquation::ACTIVE ) :
-        osaEquation( name, status ){}
-    virtual ~osaObjective(){};
-
+    virtual ~osaObjective()
+    {}
 };
 
 #endif
