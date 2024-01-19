@@ -2,12 +2,10 @@
 /* ex: set filetype=cpp softtabstop=4 shiftwidth=4 tabstop=4 cindent expandtab: */
 
 /*
-  $Id: osaConstrainedOptimization.cpp 4605 2013-12-12 21:37:52Z adeguet1 $
-
   Author(s):  Simon Leonard
   Created on: 2013
 
-  (C) Copyright 2013 Johns Hopkins University (JHU), All Rights Reserved.
+  (C) Copyright 2013-2024 Johns Hopkins University (JHU), All Rights Reserved.
 
 --- begin cisst license - do not edit ---
 
@@ -18,7 +16,7 @@ http://www.cisst.org/cisst/license.txt.
 --- end cisst license ---
 */
 
-#include <sawConstraintController/osaConstrainedOptimization.h>
+#include <sawConstraintOptimizer/osaConstrainedOptimization.h>
 
 osaConstrainedOptimization::osaConstrainedOptimization(){}
 
@@ -482,4 +480,3 @@ osaConstrainedOptimization::Evaluate
     return osaConstrainedOptimization::ESUCCESS;
 
 }
-

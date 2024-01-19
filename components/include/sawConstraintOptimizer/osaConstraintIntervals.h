@@ -1,12 +1,11 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-    */
 /* ex: set filetype=cpp softtabstop=4 shiftwidth=4 tabstop=4 cindent expandtab: */
-/*
-  $Id: osaConstraintIntervals.h 4605 2013-12-12 21:37:52Z adeguet1 $
 
+/*
   Author(s):  Simon Leonard
   Created on: 2013
 
-  (C) Copyright 2013 Johns Hopkins University (JHU), All Rights Reserved.
+  (C) Copyright 2013-2024 Johns Hopkins University (JHU), All Rights Reserved.
 
 --- begin cisst license - do not edit ---
 
@@ -20,8 +19,8 @@ http://www.cisst.org/cisst/license.txt.
 #ifndef _osaConstraintIntervals_h
 #define _osaConstraintIntervals_h
 
-#include <sawConstraintController/osaConstraintInequality.h>
-#include <sawConstraintController/sawConstraintControllerExport.h>
+#include <sawConstraintOptimizer/osaConstraintInequality.h>
+#include <sawConstraintOptimizer/sawConstraintOptimizerExport.h>
 
 class osaConstraintIntervals : public osaConstraintInequality {
 

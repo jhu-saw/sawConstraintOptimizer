@@ -1,8 +1,5 @@
 #
-# $Id: CMakeLists.txt 4605 2013-12-12 21:37:52Z adeguet1 $
-#
-# (C) Copyright 2011-2012 Johns Hopkins University (JHU), All Rights
-# Reserved.
+# (C) Copyright 2011-2024 Johns Hopkins University (JHU), All Rights Reserved.
 #
 # --- begin cisst license - do not edit ---
 #
@@ -12,45 +9,55 @@
 #
 # --- end cisst license ---
 
-set (REQUIRED_CISST_LIBRARIES
-     cisstCommon
-     cisstVector
-     cisstOSAbstraction
-     cisstMultiTask
-     cisstParameterTypes
-     cisstRobot
-     cisstNumerical)
+cmake_minimum_required (VERSION 3.10)
+project (sawConstraintOptimizerExamples VERSION 1.0.0)
 
-find_package (cisst REQUIRED ${REQUIRED_CISST_LIBRARIES})
+set (REQUIRED_CISST_LIBRARIES
+  cisstCommon
+  cisstVector
+  cisstNumerical)
+
+find_package (cisst 1.2.1 REQUIRED ${REQUIRED_CISST_LIBRARIES})
 
 if (cisst_FOUND_AS_REQUIRED)
 
   # load cisst configuration
-  include( ${CISST_USE_FILE} )
+  include (${CISST_USE_FILE})
 
-  cisst_find_saw_component (sawConstraintController REQUIRED)
+  # catkin/ROS paths
+  cisst_set_output_path ()
 
-  if (sawConstraintController_FOUND)
+  # sawConstraintOptimizer has been compiled within cisst, we should find it automatically
+  find_package (sawConstraintOptimizer 1.0.0)
 
-    include_directories (${sawConstraintController_INCLUDE_DIR})
+  if (sawConstraintOptimizer_FOUND)
 
-    set (sawConstraintController_EXAMPLES
-         osaConstrainedOptimizationExample
-         )
+    # sawConstraintOptimizer configuration
+    include_directories (${sawConstraintOptimizer_INCLUDE_DIR})
+    link_directories (${sawConstraintOptimizer_LIBRARY_DIR})
 
-    foreach (_example ${sawConstraintController_EXAMPLES})
-      add_executable (${_example} ${_example}.cpp)
-      target_link_libraries (${_example} ${sawConstraintController_LIBRARIES})
-      cisst_target_link_libraries (${_example} ${REQUIRED_CISST_LIBRARIES})
-      set_property (TARGET ${_example} PROPERTY FOLDER "sawConstraintController")
-    endforeach ()
+    add_executable (sawConstraintOptimizerExample osaConstrainedOptimizationExample.cpp)
+    set_target_properties (sawConstraintOptimizerExample
+      PROPERTIES
+      COMPONENTS sawConstraintOptimizer-Examples
+      FOLDER "sawConstraintOptimizer")
 
-    # copy configuration XML to the executable directory
-    execute_process (COMMAND ${CMAKE_COMMAND} -E copy
-       ${CMAKE_CURRENT_SOURCE_DIR}/configPID.xml
-       ${EXECUTABLE_OUTPUT_PATH}/${CMAKE_CFG_INTDIR}/configPID.xml
-       )
+    # link against non cisst libraries and saw components
+    target_link_libraries (sawConstraintOptimizerExample
+      ${sawConstraintOptimizer_LIBRARIES})
 
-  endif (sawConstraintController_FOUND)
+    # link against cisst libraries (and dependencies)
+    cisst_target_link_libraries (sawConstraintOptimizerExample ${REQUIRED_CISST_LIBRARIES})
+
+    install (
+      TARGETS sawConstraintOptimizerExample
+      COMPONENT sawConstraintOptimizer-Examples
+      RUNTIME DESTINATION bin
+      LIBRARY DESTINATION lib
+      ARCHIVE DESTINATION lib)
+
+  else (sawConstraintOptimizer_FOUND)
+    message ("Information: code in ${CMAKE_CURRENT_SOURCE_DIR} will not be compiled, it requires sawConstraintOptimizer")
+  endif (sawConstraintOptimizer_FOUND)
 
 endif (cisst_FOUND_AS_REQUIRED)

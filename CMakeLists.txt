@@ -1,8 +1,5 @@
 #
-# $Id: CMakeLists.txt 3536 2012-03-13 02:25:59Z adeguet1 $
-#
-# (C) Copyright 2014 Johns Hopkins University (JHU), All Rights
-# Reserved.
+# (C) Copyright 2014-2024 Johns Hopkins University (JHU), All Rights Reserved.
 #
 # --- begin cisst license - do not edit ---
 #
@@ -12,8 +9,23 @@
 #
 # --- end cisst license ---
 
-project (sawConstraintController)
+cmake_minimum_required(VERSION 3.10)
+project (sawConstraintOptimizerCore VERSION 1.0.0)
 
-add_subdirectory (code)
+find_package (cisst REQUIRED)
+include (${CISST_USE_FILE})
+cisst_cpack_settings (
+  VENDOR "JHU"
+  MAINTAINER "anton.deguet@jhu.edu")
+
+add_subdirectory (components)
+
+set (sawConstraintOptimizer_DIR "${sawConstraintOptimizerCore_BINARY_DIR}/components")
 add_subdirectory (examples)
 
+include (CPack)
+cpack_add_component (sawConstraintOptimizer)
+cpack_add_component (sawConstraintOptimizer-dev
+                     DEPENDS sawConstraintOptimizer)
+cpack_add_component (sawConstraintOptimizer-Examples
+                     DEPENDS sawConstraintOptimizer)
